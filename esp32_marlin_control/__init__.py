@@ -47,8 +47,8 @@ class Controller(object):
 
     def start(self):
         logger.debug(f"Baud rate: {self.baud_rate}")
-        logger.debug(f"Marlin port: {self.marlin_port} ({os.readlink(str(self.marlin_port))})")
-        logger.debug(f"ESP32 port: {self.esp32_port} ({os.readlink(str(self.esp32_port))})")
+        logger.debug(f"Marlin port: {self.marlin_port} ({self.marlin_port})")
+        logger.debug(f"ESP32 port: {self.esp32_port} ({self.esp32_port})")
 
         self.esp32_serial = Serial(self.esp32_port, self.baud_rate, timeout=1)
         self.esp32_serial.reset_input_buffer()
