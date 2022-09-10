@@ -50,17 +50,19 @@ esp32-marlin-control -v --marlin-port=COM3 --esp32-port=COM4
 
 If the port names keep changing and you want to reference the device
 by a name that doesn't change (for example `/dev/marlin` instead of
-`/dev/ttyUSB0`).
+`/dev/ttyUSB0`), try the following.
 
-First list the connected USB devices:
+First, list the connected USB devices:
 
 ```console
 lsusb
 ```
 
-Next, create a udev rules file called `/etc/udev/rules.d/100-usb-serial.rules`
-with the following content. Make sure to replace the `idVendor` and
-`idProduct` values for each device (that you found using `lsusb`). For example:
+Next, create a udev rules file called `/etc/udev/rules.d/100-usb-serial.rules` with
+rules for the board running Marlin (`/dev/marlin`) and the ESP32 controller (`/dev/esp32`).
+
+Make sure to replace the `idVendor` and `idProduct` values for each device (that can be
+found using `lsusb`). For example:
 
 ```
 SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="marlin"
