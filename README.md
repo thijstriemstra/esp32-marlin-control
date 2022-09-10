@@ -4,7 +4,8 @@ Send Gcode to Marlin from ESP32 using a serial connection.
 
 ## Installation
 
-Make sure you have Python 3.6 or newer installed.
+Tested on RaspberryPi OS but runs on any platform supported
+by Python 3.6 or newer.
 
 Checkout source code:
 
@@ -47,8 +48,9 @@ esp32-marlin-control -v --marlin-port=COM3 --esp32-port=COM4
 
 ## Static port names
 
-On Linux, if the port names keep changing and you want to reference the device
-by a name that doesn't change (for example `/dev/marlin` instead of `/dev/ttyUSB`).
+If the port names keep changing and you want to reference the device
+by a name that doesn't change (for example `/dev/marlin` instead of
+`/dev/ttyUSB0`).
 
 First list the connected USB devices:
 
@@ -76,4 +78,38 @@ The devices can now be referenced using `/dev/marlin` and `/dev/esp32`:
 
 ```console
 esp32-marlin-control -v --marlin-port=/dev/marlin --esp32-port=/dev/esp32
+```
+
+## Run as background service
+
+Create a systemd unit file at `/etc/systemd/system/esp32-marlin-control.service`.
+Make sure to replace `--marlin-port` and `--esp32-port` with the correct ports,
+and set the correct path for the `esp32-marlin-control` application:
+
+```ini
+[Unit]
+Description=ESP32 Marlin Control
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=no
+ExecStart=/path/to/esp32-marlin-control --marlin-port="/dev/marlin" --esp32-port="/dev/esp32"
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start the service:
+
+```console
+sudo systemctl daemon-reload
+sudo systemctl enable esp32-marlin-control.service
+sudo systemctl start esp32-marlin-control.service
+```
+
+View log with:
+
+```console
+journalctl -f -n 50 -b -u esp32-marlin-control.service
 ```
