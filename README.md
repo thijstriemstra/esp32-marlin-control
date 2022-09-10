@@ -115,3 +115,34 @@ View log with:
 ```console
 journalctl -f -n 50 -b -u esp32-marlin-control.service
 ```
+
+# ESP32 example code
+
+Once the `esp32-marlin-control` tool is running it will listen for serial messages from the
+ESP32, and forward them to the board running Marlin.
+
+Simple example that demonstrates sending GCode from the ESP32 to Marlin:
+
+```c++
+#include "Arduino.h"
+
+#define SERIAL_BAUD_RATE 250000
+
+void setup() {
+  // start serial connection
+  Serial.begin(SERIAL_BAUD_RATE);
+
+  // M119 (show endstop status)
+  Serial.println("M119");
+
+  // M84 (disable steppers)
+  Serial.println("M84 X Y Z");
+
+  // make controller board beep
+  Serial.println("M300 S300 P100");
+}
+
+void loop() {
+
+}
+```
