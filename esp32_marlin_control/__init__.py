@@ -18,7 +18,7 @@ from serial.tools import list_ports
 
 logger = logging.getLogger(__name__)
 
-__version__ = '0.5.0'
+__version__ = '0.6.0'
 
 
 class Controller(object):
