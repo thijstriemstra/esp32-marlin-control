@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright 2022 Thijs Triemstra
+# Copyright 2022-2023 Thijs Triemstra
 # See LICENSE for more details
 
 """
@@ -25,7 +25,7 @@ class Controller(object):
     def __init__(self, config):
         self.config = config
 
-        self.baud_rate = self.config.get('baud_rate')
+        self.baud_rate = self.config.get("baud_rate")
         self.esp32_port = self.config.get("esp32_port")
         self.marlin_port = self.config.get("marlin_port")
 
@@ -37,8 +37,8 @@ class Controller(object):
             logger.error(f"Could not find Marlin port: {self.marlin_port}")
             sys.exit(0)
 
-    def port_exists(self, device_name):
-        ports = list_ports.comports()
+    def port_exists(self, device_name, include_links=True):
+        ports = list_ports.comports(include_links=include_links)
         for p in ports:
             if device_name in p.device:
                 return True
