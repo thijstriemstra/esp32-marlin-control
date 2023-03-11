@@ -13,9 +13,16 @@ Checkout source code:
 git clone https://github.com/thijstriemstra/esp32-marlin-control.git
 ```
 
-Install tool:
+Install `pyserial`:
 
 ```console
+python3 -m pip install pyserial
+```
+
+Install `esp32-marlin-control`:
+
+```console
+cd esp32-marlin-control
 python3 -m pip install -e .
 ```
 
@@ -23,10 +30,8 @@ You should now be able to use the `esp32-marlin-control` commandline tool,
 e.g:
 
 ```console
-esp32-marlin-control --version
+esp32-marlin-control --help
 ```
-
-Use the `--help` option for more info.
 
 ## Usage
 
